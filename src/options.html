@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TopShot Serial Multiples — Settings</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #0A0A0F;
+      --bg-secondary: #12121A;
+      --bg-card: #16161F;
+      --bg-input: #1C1C28;
+      --border: rgba(255,255,255,0.06);
+      --border-hover: rgba(255,255,255,0.12);
+      --text-primary: #E8E8ED;
+      --text-secondary: #8E8E9A;
+      --text-muted: #5A5A68;
+      --accent: #4ECDC4;
+      --accent-dim: rgba(78,205,196,0.15);
+      --danger: #E74C3C;
+      --success: #2ECC71;
+      --warning: #F39C12;
+      --font-mono: "JetBrains Mono", "SF Mono", "Fira Code", "Cascadia Code", ui-monospace, monospace;
+      --font-sans: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+    }
+
+    /* ── Layout ─────────────────────────────────────────────── */
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    header {
+      margin-bottom: 40px;
+    }
+
+    header h1 {
+      font-family: var(--font-mono);
+      font-size: 24px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.03em;
+      margin-bottom: 6px;
+    }
+
+    header p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* ── Section Cards ──────────────────────────────────────── */
+    .section {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .section-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* ── Baseline Selector ──────────────────────────────────── */
+    .baseline-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 8px;
+    }
+
+    .baseline-option {
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg-input);
+      cursor: pointer;
+      transition: all 0.15s;
+      text-align: center;
+    }
+
+    .baseline-option:hover {
+      border-color: var(--border-hover);
+      background: rgba(255,255,255,0.04);
+    }
+
+    .baseline-option.active {
+      border-color: var(--accent);
+      background: var(--accent-dim);
+    }
+
+    .baseline-option .label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .baseline-option .hint {
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* ── Tier Table ─────────────────────────────────────────── */
+    .tier-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .tier-table th {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 8px 12px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .tier-row {
+      transition: background 0.1s;
+    }
+
+    .tier-row:hover {
+      background: rgba(255,255,255,0.02);
+    }
+
+    .tier-row td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+      vertical-align: middle;
+    }
+
+    .tier-row.disabled td {
+      opacity: 0.4;
+    }
+
+    .tier-color-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+
+    .tier-label {
+      font-weight: 600;
+    }
+
+    .tier-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* ── Inputs ─────────────────────────────────────────────── */
+    input[type="number"],
+    input[type="text"] {
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 6px 10px;
+      color: var(--text-primary);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      width: 80px;
+      text-align: right;
+      transition: border-color 0.15s;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    input[type="number"]::-webkit-inner-spin-button {
+      opacity: 0.5;
+    }
+
+    /* Toggle switch */
+    .toggle {
+      position: relative;
+      width: 36px;
+      height: 20px;
+      cursor: pointer;
+    }
+
+    .toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .toggle-track {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      transition: all 0.2s;
+    }
+
+    .toggle-thumb {
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 14px;
+      height: 14px;
+      background: var(--text-muted);
+      border-radius: 50%;
+      transition: all 0.2s;
+    }
+
+    .toggle input:checked ~ .toggle-track {
+      background: var(--accent-dim);
+      border-color: var(--accent);
+    }
+
+    .toggle input:checked ~ .toggle-thumb {
+      left: 19px;
+      background: var(--accent);
+    }
+
+    /* ── Narrative Numbers ──────────────────────────────────── */
+    .narrative-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .narrative-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .narrative-tag .remove {
+      cursor: pointer;
+      color: var(--text-muted);
+      font-size: 14px;
+      line-height: 1;
+      margin-left: 2px;
+    }
+
+    .narrative-tag .remove:hover { color: var(--danger); }
+
+    .add-narrative {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .add-narrative input {
+      width: 60px;
+      font-size: 12px;
+      padding: 4px 8px;
+    }
+
+    .add-narrative button {
+      background: var(--accent-dim);
+      border: 1px solid rgba(78,205,196,0.3);
+      color: var(--accent);
+      border-radius: 20px;
+      padding: 4px 10px;
+      font-size: 11px;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    /* ── Display Options ────────────────────────────────────── */
+    .display-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .display-option {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      background: var(--bg-input);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+
+    .display-option-label {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    /* ── Footer Actions ─────────────────────────────────────── */
+    .footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border);
+      padding: 16px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      z-index: 100;
+    }
+
+    .footer .btn {
+      padding: 10px 24px;
+      border-radius: 8px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      transition: all 0.15s;
+    }
+
+    .btn-save {
+      background: var(--accent);
+      color: #0A0A0F;
+      border-color: var(--accent);
+    }
+    .btn-save:hover { filter: brightness(1.1); }
+
+    .btn-reset {
+      background: transparent;
+      color: var(--text-muted);
+    }
+    .btn-reset:hover { color: var(--danger); border-color: var(--danger); }
+
+    .btn-export {
+      background: transparent;
+      color: var(--text-secondary);
+    }
+    .btn-export:hover { color: var(--text-primary); }
+
+    /* ── Toast ───────────────────────────────────────────────── */
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      z-index: 200;
+      transform: translateY(-20px);
+      opacity: 0;
+      transition: all 0.3s;
+      pointer-events: none;
+    }
+
+    .toast.visible {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .toast.success {
+      background: rgba(46,204,113,0.15);
+      border: 1px solid rgba(46,204,113,0.3);
+      color: var(--success);
+    }
+
+    .toast.error {
+      background: rgba(231,76,60,0.15);
+      border: 1px solid rgba(231,76,60,0.3);
+      color: var(--danger);
+    }
+  </style>
+</head>
+<body>
+
+<div class="toast" id="toast"></div>
+
+<div class="container">
+  <header>
+    <h1>// Serial Multiples</h1>
+    <p>Configure how serial-based valuations are calculated and displayed on NBA Top Shot marketplace listings.</p>
+  </header>
+
+  <!-- ── Baseline Source ──────────────────────────────────── -->
+  <div class="section" style="opacity: 0.5; pointer-events: none; position: relative;">
+    <div style="position: absolute; top: 12px; right: 16px; background: rgba(243, 156, 18, 0.15); border: 1px solid rgba(243, 156, 18, 0.3); color: #F39C12; padding: 4px 10px; border-radius: 4px; font-family: var(--font-mono); font-size: 10px; font-weight: 600; letter-spacing: 0.05em; pointer-events: auto;">COMING SOON</div>
+    <div class="section-header">
+      <div>
+        <div class="section-title">Baseline Price Source</div>
+        <div class="section-subtitle">Currently uses the lowest random-serial ask price on the current listing page. Cross-parallel baseline selection is planned for a future update.</div>
+      </div>
+    </div>
+    <div class="baseline-options" id="baselineOptions">
+      <div class="baseline-option" data-value="largest_edition">
+        <div class="label">Largest Edition</div>
+        <div class="hint">Last sale of highest mint</div>
+      </div>
+      <div class="baseline-option" data-value="common">
+        <div class="label">Common</div>
+        <div class="hint">Common parallel floor</div>
+      </div>
+      <div class="baseline-option" data-value="fandom">
+        <div class="label">Fandom</div>
+        <div class="hint">Fandom parallel floor</div>
+      </div>
+      <div class="baseline-option" data-value="rare">
+        <div class="label">Rare</div>
+        <div class="hint">Rare parallel floor</div>
+      </div>
+      <div class="baseline-option" data-value="legendary">
+        <div class="label">Legendary</div>
+        <div class="hint">Legendary parallel floor</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Serial Tiers ─────────────────────────────────────── -->
+  <div class="section">
+    <div class="section-header">
+      <div>
+        <div class="section-title">Serial Multiplier Tiers</div>
+        <div class="section-subtitle">Tiers are evaluated top-down — first match wins. Adjust multipliers to fit your valuation model.</div>
+      </div>
+    </div>
+    <table class="tier-table">
+      <thead>
+        <tr>
+          <th style="width:40px">On</th>
+          <th>Tier</th>
+          <th>Range / Rule</th>
+          <th style="width:90px">Multiplier</th>
+          <th style="width:50px">Color</th>
+        </tr>
+      </thead>
+      <tbody id="tierTableBody">
+        <!-- Populated by JS -->
+      </tbody>
+    </table>
+
+    <!-- Narrative numbers editor -->
+    <div id="narrativeEditor" style="margin-top: 16px; display: none;">
+      <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 8px;">
+        Narrative Numbers — add or remove culturally significant serials:
+      </div>
+      <div class="narrative-tags" id="narrativeTags"></div>
+      <div class="add-narrative" style="margin-top: 8px;">
+        <input type="number" id="addNarrativeInput" placeholder="#" min="1">
+        <input type="text" id="addNarrativeEmoji" placeholder="emoji" maxlength="4" style="width:50px;text-align:center;font-size:16px;">
+        <button id="addNarrativeBtn">+ Add</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Display Settings ─────────────────────────────────── -->
+  <div class="section">
+    <div class="section-header">
+      <div>
+        <div class="section-title">Display</div>
+        <div class="section-subtitle">What to show on marketplace listing cards</div>
+      </div>
+    </div>
+    <div class="display-grid">
+      <div class="display-option">
+        <span class="display-option-label">Show multiplier badge</span>
+        <label class="toggle">
+          <input type="checkbox" id="dispMultiplier">
+          <span class="toggle-track"></span>
+          <span class="toggle-thumb"></span>
+        </label>
+      </div>
+      <div class="display-option">
+        <span class="display-option-label">Show estimated value</span>
+        <label class="toggle">
+          <input type="checkbox" id="dispEstValue">
+          <span class="toggle-track"></span>
+          <span class="toggle-thumb"></span>
+        </label>
+      </div>
+      <div class="display-option">
+        <span class="display-option-label">Show delta to ask %</span>
+        <label class="toggle">
+          <input type="checkbox" id="dispDelta">
+          <span class="toggle-track"></span>
+          <span class="toggle-thumb"></span>
+        </label>
+      </div>
+      <div class="display-option">
+        <span class="display-option-label">Compact mode</span>
+        <label class="toggle">
+          <input type="checkbox" id="dispCompact">
+          <span class="toggle-track"></span>
+          <span class="toggle-thumb"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Advanced ─────────────────────────────────────────── -->
+  <div class="section">
+    <div class="section-header">
+      <div>
+        <div class="section-title">Advanced</div>
+      </div>
+    </div>
+    <div class="display-grid">
+      <div class="display-option">
+        <span class="display-option-label">Stale baseline (days)</span>
+        <input type="number" id="advStaleDays" min="1" max="365" value="30">
+      </div>
+      <div class="display-option">
+        <span class="display-option-label">Cache TTL (minutes)</span>
+        <input type="number" id="advCacheTTL" min="1" max="1440" value="15">
+      </div>
+      <div class="display-option">
+        <span class="display-option-label">Debug logging</span>
+        <label class="toggle">
+          <input type="checkbox" id="advDebug">
+          <span class="toggle-track"></span>
+          <span class="toggle-thumb"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Footer ───────────────────────────────────────────── -->
+<div class="footer">
+  <button class="btn btn-export" id="btnExport">Export JSON</button>
+  <button class="btn btn-reset" id="btnReset">Reset Defaults</button>
+  <button class="btn btn-save" id="btnSave">Save Settings</button>
+</div>
+
+<script src="options.js"></script>
+</body>
+</html>

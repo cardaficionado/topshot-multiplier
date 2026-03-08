@@ -1,0 +1,121 @@
+/* ── TopShot Serial Multiples — Overlay Styles ───────────────── */
+
+.tsm-badge {
+  position: absolute;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: rgba(15, 15, 20, 0.92);
+  backdrop-filter: blur(8px);
+  font-family: "SF Mono", "Fira Code", "Cascadia Code", monospace;
+  font-size: 11px;
+  line-height: 1;
+  white-space: nowrap;
+  pointer-events: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  animation: tsm-fade-in 0.2s ease-out;
+}
+
+/* Position variants */
+.tsm-badge--top-right    { top: 2px; right: 4px; }
+.tsm-badge--top-left     { top: 2px; left: 4px; }
+.tsm-badge--bottom-right { bottom: 2px; right: 4px; }
+.tsm-badge--bottom-left  { bottom: 2px; left: 4px; }
+
+/* Multiplier pill */
+.tsm-multiplier {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: #fff;
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.03em;
+}
+
+/* Estimated value */
+.tsm-est-value {
+  color: #E0E0E0;
+  font-weight: 500;
+}
+
+/* Delta to ask */
+.tsm-delta {
+  font-weight: 600;
+}
+.tsm-underpriced {
+  color: #2ECC71; /* green — estimated value > ask price */
+}
+.tsm-overpriced {
+  color: #E74C3C; /* red — estimated value < ask price */
+}
+.tsm-fair {
+  color: #F39C12; /* amber — within ±10% */
+}
+
+/* Tier label fallback */
+.tsm-tier-label {
+  font-weight: 600;
+  font-size: 10px;
+}
+
+/* ── Detail Page Badge ────────────────────────────────────────── */
+.tsm-detail-badge {
+  margin-top: 12px;
+  animation: tsm-fade-in 0.3s ease-out;
+}
+
+.tsm-detail-tier {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 12px;
+  background: rgba(15, 15, 20, 0.85);
+  backdrop-filter: blur(8px);
+  border-radius: 8px;
+  font-family: "SF Mono", "Fira Code", "Cascadia Code", monospace;
+}
+
+.tsm-detail-tier-label {
+  color: #fff;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.tsm-detail-multiplier {
+  color: #B0B0B0;
+  font-size: 11px;
+}
+
+.tsm-detail-serial {
+  color: #808080;
+  font-size: 11px;
+}
+
+.tsm-detail-badge-source {
+  color: #606060;
+  font-size: 10px;
+  font-style: italic;
+}
+
+/* Badge type icon indicator */
+.tsm-badge-icon {
+  font-size: 12px;
+  line-height: 1;
+}
+
+/* ── Animation ────────────────────────────────────────────────── */
+@keyframes tsm-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

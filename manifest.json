@@ -1,0 +1,51 @@
+{
+  "manifest_version": 3,
+  "name": "TopShot Serial Multiples",
+  "version": "1.0.0",
+  "description": "Overlay serial-based and parallel-based valuation multiples on NBA Top Shot marketplace listings.",
+  "permissions": ["storage"],
+  "host_permissions": [
+    "https://nbatopshot.com/*",
+    "https://www.nbatopshot.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://nbatopshot.com/*",
+        "https://www.nbatopshot.com/*"
+      ],
+      "js": ["src/content.js"],
+      "css": ["src/content.css"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://nbatopshot.com/*",
+        "https://www.nbatopshot.com/*"
+      ],
+      "js": ["src/interceptor.js"],
+      "world": "MAIN",
+      "run_at": "document_start"
+    }
+  ],
+  "background": {
+    "service_worker": "src/background.js"
+  },
+  "options_ui": {
+    "page": "src/options.html",
+    "open_in_tab": true
+  },
+  "action": {
+    "default_popup": "src/popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}
